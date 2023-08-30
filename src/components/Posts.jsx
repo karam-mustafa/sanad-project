@@ -1,5 +1,12 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 export default function Posts() {
   const data = [
@@ -20,39 +27,19 @@ export default function Posts() {
   ];
   return (
     <View>
-      {data.map((item, index) => {
-        return (
-          <View style={styles.post} key={index}>
-            <Image style={styles.image} source={{uri: item.image}} />
-            <View
-              style={{
-                padding: 20,
-                justifyContent: 'flex-end',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-              }}>
-              <Text
+      <FlatList
+        data={data}
+        renderItem={({item}) => {
+          return (
+            <View style={styles.post} key={item.id}>
+              <Image style={styles.image} source={{uri: item.image}} />
+              <View
                 style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: '#16ab75',
-                  marginBottom: 5,
+                  padding: 20,
+                  justifyContent: 'flex-end',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
                 }}>
-                {item.title}
-              </Text>
-              <Text style={{fontSize: 15, fontWeight: 800}}>
-                {item.description.substring(0, 200)}
-                {item.description.length > 200 ? ' ...' : ''}
-              </Text>
-              <View style={styles.dateArea}>
-                <Text style={{fontSize: 15, fontWeight: 500}}>
-                  حتى {item.end_date}
-                </Text>
-                <Text style={{fontSize: 15, fontWeight: 500}}>
-                  تبدأ في {item.start_date}
-                </Text>
-              </View>
-              <View style={styles.link}>
                 <Text
                   style={{
                     fontSize: 20,
@@ -60,13 +47,36 @@ export default function Posts() {
                     color: '#16ab75',
                     marginBottom: 5,
                   }}>
-                  {item.link}
+                  {item.title}
                 </Text>
+                <Text style={{fontSize: 15, fontWeight: 800}}>
+                  {item.description.substring(0, 200)}
+                  {item.description.length > 200 ? ' ...' : ''}
+                </Text>
+                <View style={styles.dateArea}>
+                  <Text style={{fontSize: 15, fontWeight: 500}}>
+                    حتى {item.end_date}
+                  </Text>
+                  <Text style={{fontSize: 15, fontWeight: 500}}>
+                    تبدأ في {item.start_date}
+                  </Text>
+                </View>
+                <View style={styles.link}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      color: '#16ab75',
+                      marginBottom: 5,
+                    }}>
+                    {item.link}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-        );
-      })}
+          );
+        }}
+      />
     </View>
   );
 }
