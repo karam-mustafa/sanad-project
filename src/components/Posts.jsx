@@ -44,10 +44,10 @@ export default function Posts({data}) {
                 </Text>
                 <View style={styles.dateArea}>
                   <Text style={{fontSize: 15, fontWeight: 500}}>
-                    حتى {item.end_date}
+                    حتى  {item.end_date} 
                   </Text>
                   <Text style={{fontSize: 15, fontWeight: 500}}>
-                    تبدأ في {item.start_date}
+                    تبدأ في  {item.start_date} 
                   </Text>
                 </View>
                 <View style={styles.link}>

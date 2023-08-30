@@ -17,7 +17,15 @@ export default function App() {
   useEffect(() => {
     fetch('https://sanad.karam-mustafa.com/api/posts')
       .then(res => res.json())
-      .then(res => setPosts(res.data));
+      .then(res =>
+        setPosts(
+          res.data.map(item => {
+            item.start_date = new Date(item.start_date).toLocaleDateString();
+            item.end_date = new Date(item.end_date).toLocaleDateString();
+            return item;
+          }),
+        ),
+      );
 
     fetch('https://sanad.karam-mustafa.com/api/categories')
       .then(res => res.json())
