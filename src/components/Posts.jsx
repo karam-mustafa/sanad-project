@@ -60,7 +60,6 @@ export default function Posts() {
                     color: '#16ab75',
                     marginBottom: 5,
                   }}>
-                  {' '}
                   {item.link}
                 </Text>
               </View>
