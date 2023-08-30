@@ -2,29 +2,18 @@ import React from 'react';
 import {
   FlatList,
   Image,
+  Linking,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
-export default function Posts() {
-  const data = [
-    {
-      id: 1,
-      title: 'ورشة تطبيقات الويب',
-      description:
-        ' لقد اخذنا جلسة رائعة واستمتعنا مع المدرب الرائع في المركز الرائع مع المتدربين الرائعين لقد اخذنا جلسة رائعة واستمتعنا مع المدرب الرائع في المركز الرائع مع المتدربين الرائعين لقد اخذنا جلسة رائعة واستمتعنا مع المدرب الرائع في المركز الرائع مع المتدربين الرائعين',
-      category_id: '1',
-      image:
-        'https://www.thaqfny.com/wp-content/uploads/2021/02/%D8%A7%D9%83%D8%AA%D8%A8-%D8%A7%D8%B3%D9%85%D9%83-%D8%B9%D9%84%D9%89-%D8%B5%D9%88%D8%B1-%D8%B5%D8%A8%D8%A7%D8%AD-%D8%A7%D9%84%D8%AE%D9%8A%D8%B1-3.jpeg',
-      link: 'karam1',
-      start_date: new Date('2023-08-16 00:00:00').toDateString(),
-      end_date: new Date('2023-08-16 00:00:00').toDateString(),
-      created_at: '2023-08-25T06:17:47.000000Z',
-      updated_at: '2023-08-25T06:17:47.000000Z',
-    },
-  ];
+export default function Posts({data}) {
+  const openLink = async link => {
+    await Linking.openURL(link);
+  };
   return (
     <View>
       <FlatList
@@ -62,15 +51,17 @@ export default function Posts() {
                   </Text>
                 </View>
                 <View style={styles.link}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                      color: '#16ab75',
-                      marginBottom: 5,
-                    }}>
-                    {item.link}
-                  </Text>
+                  <Pressable onPress={() => openLink(item.link)}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        color: '#16ab75',
+                        marginBottom: 5,
+                      }}>
+                      قراءة المزيد
+                    </Text>
+                  </Pressable>
                 </View>
               </View>
             </View>

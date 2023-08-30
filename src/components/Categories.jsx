@@ -8,9 +8,7 @@ import {
   View,
 } from 'react-native';
 
-export default function Categories() {
-  const data = ['Workshops', 'Trainings', 'New', 'Web', 'Intro', 'Sanad'];
-
+export default function Categories({data}) {
   const [activeItem, setActiveItem] = useState(null);
 
   const toogleActiveItem = index => {
@@ -22,7 +20,7 @@ export default function Categories() {
   };
 
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+    <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
       {data.map((item, index) => {
         return (
           <Pressable
@@ -34,7 +32,7 @@ export default function Categories() {
             }
             onPress={() => toogleActiveItem(index)}>
             <Text style={activeItem == index ? styles.textActive : styles.text}>
-              {item}
+              {item.title}
             </Text>
           </Pressable>
         );
@@ -54,7 +52,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 7,
-    marginBottom: 17
+    marginBottom: 17,
+    direction: 'rtl'
   },
   categoryAreaActive: {
     width: 100,
