@@ -22,7 +22,7 @@ export default function Categories() {
   };
 
   return (
-    <ScrollView horizontal={true}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       {data.map((item, index) => {
         return (
           <Pressable
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 7,
+    marginBottom: 17
   },
   categoryAreaActive: {
     width: 100,

@@ -1,16 +1,18 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import Header from './src/components/Header';
 import Categories from './src/components/Categories';
+import Posts from './src/components/Posts';
 
 
 export default function App() {
   return (
     <SafeAreaView>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Header />
         <Categories />
-      </View>
+        <Posts />
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -18,7 +20,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    height: '100%',
     paddingHorizontal: 10,
   },
 });
