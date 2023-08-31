@@ -1,68 +1,70 @@
-import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
-import Header from './src/components/Header';
-import Categories from './src/components/Categories';
-import Posts from './src/components/Posts';
+import React from 'react';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import Home from './src/Pages/Home';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {TouchableOpacity} from 'react-native';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [posts, setPosts] = useState([]);
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    fetch('https://sanad.karam-mustafa.com/api/posts')
-      .then(res => res.json())
-      .then(res =>
-        setPosts(
-          res.data.map(item => {
-            item.start_date = new Date(item.start_date).toLocaleDateString();
-            item.end_date = new Date(item.end_date).toLocaleDateString();
-            return item;
-          }),
-        ),
-      );
-
-    fetch('https://sanad.karam-mustafa.com/api/categories')
-      .then(res => res.json())
-      .then(res => setCategories(res.data));
-  }, []);
-
   return (
-    <SafeAreaView>
-      <ScrollView
-        style={{...styles.container, height: posts.length ? '' : '100%'}}>
-        <Header />
-        {categories.length ? (
-          <Categories data={categories} />
-        ) : (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <ActivityIndicator size={'large'} />
-          </View>
-        )}
-        {posts.length ? (
-          <Posts data={posts} />
-        ) : (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <ActivityIndicator size={'large'} />
-          </View>
-        )}
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: styles.tabBarStyle,
+          headerShown: false,
+        }}>
+        <Tab.Screen
+          name="Home"
+          options={{
+            tabBarButton: props => (
+              <TouchableOpacity
+                style={styles.tab}
+                onPress={() => null}>
+                {/* <FontAwesomeIcon color="#2D2E83" size={30} icon={faHouse} /> */}
+                <Text style={{color: 'white', fontSize: 20}}>Home</Text>
+              </TouchableOpacity>
+            ),
+          }}
+          component={Home}
+        />
+        <Tab.Screen
+          name="About"
+          options={{
+            tabBarButton: props => (
+              <TouchableOpacity
+                style={styles.tab}
+                activeOpacity={1}
+                onPress={() => null}>
+                {/* <FontAwesomeIcon color="#2D2E83" size={30} icon={faHouse} /> */}
+                <Text>Home</Text>
+              </TouchableOpacity>
+            ),
+            unmountOnBlur: true,
+          }}
+          component={Home}
+        />
+        
+        <Tab.Screen
+          name="Search"
+          options={{
+            tabBarButton: props => (
+              <TouchableOpacity
+                style={styles.tab}
+                activeOpacity={1}
+                onPress={() => null}>
+                {/* <FontAwesomeIcon color="#2D2E83" size={30} icon={faHouse} /> */}
+                <Text>Home</Text>
+              </TouchableOpacity>
+            ),
+            unmountOnBlur: true,
+          }}
+          component={Home}
+        />
+        
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -70,5 +72,29 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     paddingHorizontal: 10,
+  },
+  tabBarStyle: {
+    backgroundColor: '#16ab75',
+    height: 70,
+    paddingBottom: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderTopWidth: 0,
+    borderWidth: 0,
+    borderRadius: 0,
+    elevation: 0,
+    borderTopEndRadius: 70,
+    borderTopStartRadius: 70,
+    position: 'absolute',
+  },
+  tab: {
+    // backgroundColor: 'white',
+    // paddingBottom: 6,
+    // alignItems: 'center',
+    paddingBottom: 6,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 });

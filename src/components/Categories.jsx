@@ -20,7 +20,7 @@ export default function Categories({data}) {
   };
 
   return (
-    <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
+    <ScrollView style={{direction: 'rtl'}} horizontal={true} showsHorizontalScrollIndicator={false}>
       {data.map((item, index) => {
         return (
           <Pressable

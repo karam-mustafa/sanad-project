@@ -3,10 +3,9 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 export default function Header() {
   return (
     <View style={styles.header}>
-      <Text style={styles.brand}>سند</Text>
       <Image
         style={styles.logo}
-        source={require('../assets/images/logo.png')}
+        source={require('../assets/images/sanad.png')}
       />
     </View>
   );
@@ -14,7 +13,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 100,
+    width: 250,
     height: 100,
   },
   brand: {
@@ -27,5 +26,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    width: '100%',
+    height: 100,
+    marginVertical: 20
   },
 });
