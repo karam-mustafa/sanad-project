@@ -8,30 +8,36 @@ import {
   View,
 } from 'react-native';
 
-export default function Categories({data}) {
+export default function Categories({data, searchForPostsByCategoryId}) {
   const [activeItem, setActiveItem] = useState(null);
 
-  const toogleActiveItem = index => {
-    if (index == activeItem) {
+  const toogleActiveItem = id => {
+    if (id == activeItem) {
       setActiveItem(null);
+      searchForPostsByCategoryId(id)
     } else {
-      setActiveItem(index);
+      setActiveItem(id);
+      searchForPostsByCategoryId(id)
     }
   };
 
   return (
-    <ScrollView style={{direction: 'rtl'}} horizontal={true} showsHorizontalScrollIndicator={false}>
-      {data.map((item, index) => {
+    <ScrollView style={{direction: 'rtl'}}
+    contentContainerStyle={{
+      flexDirection: 'row-reverse'
+    }}
+    horizontal={true} showsHorizontalScrollIndicator={false}>
+      {data.map((item) => {
         return (
           <Pressable
-            key={index}
+            key={item.id}
             style={
-              activeItem == index
+              activeItem == item.id
                 ? styles.categoryAreaActive
                 : styles.categoryArea
             }
-            onPress={() => toogleActiveItem(index)}>
-            <Text style={activeItem == index ? styles.textActive : styles.text}>
+            onPress={() => toogleActiveItem(item.id)}>
+            <Text style={activeItem == item.id ? styles.textActive : styles.text}>
               {item.title}
             </Text>
           </Pressable>

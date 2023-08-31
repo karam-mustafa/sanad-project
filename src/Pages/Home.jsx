@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import Header from './../components/Header';
@@ -13,11 +14,14 @@ import Posts from './../components/Posts';
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetch('https://sanad.karam-mustafa.com/api/posts')
+  const onRefresh = (url = 'https://sanad.karam-mustafa.com/api/posts') => {
+    setLoading(true);
+    fetch(url)
       .then(res => res.json())
-      .then(res =>
+      .then(res => {
+        console.log(1);
         setPosts(
           res.data.map(item => {
             item.start_date = new Date(item.start_date).toLocaleDateString();
@@ -25,20 +29,30 @@ export default function Home() {
             return item;
           }),
         ),
-      );
+          setLoading(false);
+      });
+  };
 
+  const searchForPostsByCategoryId = id => {
+    onRefresh(id ? 'https://sanad.karam-mustafa.com/api/posts?category_id=' + id : '')
+  };
+  
+  useEffect(() => {
+    onRefresh();
     fetch('https://sanad.karam-mustafa.com/api/categories')
       .then(res => res.json())
       .then(res => setCategories(res.data));
   }, []);
 
   return (
-    <SafeAreaView>
-      <ScrollView
-        style={{...styles.container, height: posts.length ? '' : '100%'}}>
+    <View style={{flex: 1}}>
+      <ScrollView style={{...styles.container, height: '100%'}}>
         <Header />
         {categories.length ? (
-          <Categories data={categories} />
+          <Categories
+            data={categories}
+            searchForPostsByCategoryId={searchForPostsByCategoryId}
+          />
         ) : (
           <View
             style={{
@@ -49,20 +63,22 @@ export default function Home() {
             <ActivityIndicator size={'large'} />
           </View>
         )}
-        {posts.length ? (
+        {loading ? (
+          <View
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <ActivityIndicator size={'large'} />
+          </View>
+        ) : posts.length ? (
           <Posts data={posts} />
         ) : (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <ActivityIndicator size={'large'} />
-          </View>
+          <Text>لا يوجد بيانات</Text>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -70,7 +86,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     paddingHorizontal: 16,
+    flex: 1,
     marginBottom: 70,
-    // height:'100%'
   },
 });
