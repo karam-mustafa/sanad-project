@@ -79,7 +79,7 @@ export default function Home() {
         ) : posts.length ? (
           <Posts data={posts} />
         ) : (
-          <Text>لا يوجد بيانات</Text>
+          <NoData />
         )}
       </View>
     </ScrollView>
