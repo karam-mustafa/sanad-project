@@ -10,6 +10,7 @@ import {
 import Header from './../components/Header';
 import Categories from './../components/Categories';
 import Posts from './../components/Posts';
+import NoData from '../components/NoData';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
