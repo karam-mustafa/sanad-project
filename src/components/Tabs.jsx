@@ -91,9 +91,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   tab: {
-    // backgroundColor: 'white',
-    // paddingBottom: 6,
-    // alignItems: 'center',
     paddingTop: 10,
     flex: 1,
     alignItems: 'center',

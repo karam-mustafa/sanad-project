@@ -21,7 +21,6 @@ export default function Home() {
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        console.log(1);
         setPosts(
           res.data.map(item => {
             item.start_date = new Date(item.start_date).toLocaleDateString();
@@ -34,9 +33,13 @@ export default function Home() {
   };
 
   const searchForPostsByCategoryId = id => {
-    onRefresh(id ? 'https://sanad.karam-mustafa.com/api/posts?category_id=' + id : '')
+    onRefresh(
+      id
+        ? 'https://sanad.karam-mustafa.com/api/posts?category_id=' + id
+        : 'https://sanad.karam-mustafa.com/api/posts',
+    );
   };
-  
+
   useEffect(() => {
     onRefresh();
     fetch('https://sanad.karam-mustafa.com/api/categories')
@@ -45,40 +48,41 @@ export default function Home() {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
-      <ScrollView style={{...styles.container, height: '100%'}}>
-        <Header />
+    <ScrollView
+      style={{...styles.container}}
+      contentContainerStyle={{flexGrow: 1}}>
+      <Header />
+      <View
+        style={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         {categories.length ? (
           <Categories
             data={categories}
             searchForPostsByCategoryId={searchForPostsByCategoryId}
           />
         ) : (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <ActivityIndicator size={'large'} />
-          </View>
+          <ActivityIndicator size={'large'} />
         )}
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flex: 1,
+        }}>
         {loading ? (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <ActivityIndicator size={'large'} />
-          </View>
+          <ActivityIndicator size={'large'} />
         ) : posts.length ? (
           <Posts data={posts} />
         ) : (
           <Text>لا يوجد بيانات</Text>
         )}
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -86,7 +90,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     paddingHorizontal: 16,
-    flex: 1,
-    marginBottom: 70,
+    height: '100%',
   },
 });

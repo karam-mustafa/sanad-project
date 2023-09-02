@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Header from './../components/Header';
 import Posts from './../components/Posts';
+import NoData from '../components/NoData';
 
 export default function Search() {
   const [posts, setPosts] = useState([]);
@@ -36,7 +37,6 @@ export default function Search() {
     fetch('https://sanad.karam-mustafa.com/api/posts?search=' + value)
       .then(res => res.json())
       .then(res => {
-      
         setPosts(
           res.data.map(item => {
             item.start_date = new Date(item.start_date).toLocaleDateString();
@@ -49,29 +49,31 @@ export default function Search() {
   };
 
   return (
-    <SafeAreaView>
-      <ScrollView
-        style={{...styles.container, height: posts.length ? '' : '100%'}}>
-        <Header />
-        <TextInput
-          onChangeText={value => search(value)}
-          placeholder="ابحث عن ورشة "
-          style={styles.input}
-        />
+    <ScrollView
+      contentContainerStyle={{flexGrow: 1}}
+      style={{...styles.container}}>
+      <Header />
+      <TextInput
+        onChangeText={value => search(value)}
+        placeholder="ابحث عن ورشة "
+        style={styles.input}
+      />
+      <View
+        style={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flex:1
+        }}>
         {loading ? (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <ActivityIndicator size={'large'} />
-          </View>
+          <ActivityIndicator size={'large'} />
+        ) : posts.length ? (
+          <Posts data={posts} />
         ) : (
-          (posts.length ? <Posts data={posts} /> : <Text>لا يوجد أي بيانات نتيجة هذا البحث</Text>)
+          <NoData />
         )}
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -79,8 +81,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     paddingHorizontal: 16,
-    marginBottom: 70,
-    // height:'100%'
+    height: '100%',
   },
   input: {
     width: '100%',

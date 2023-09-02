@@ -14,20 +14,23 @@ export default function Categories({data, searchForPostsByCategoryId}) {
   const toogleActiveItem = id => {
     if (id == activeItem) {
       setActiveItem(null);
-      searchForPostsByCategoryId(id)
+      searchForPostsByCategoryId(null);
     } else {
       setActiveItem(id);
-      searchForPostsByCategoryId(id)
+      searchForPostsByCategoryId(id);
     }
   };
 
   return (
-    <ScrollView style={{direction: 'rtl'}}
-    contentContainerStyle={{
-      flexDirection: 'row-reverse'
-    }}
-    horizontal={true} showsHorizontalScrollIndicator={false}>
-      {data.map((item) => {
+    <ScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: 'flex-end',
+      }}
+      style={{marginRight: 10, transform: [{scaleX: -1}]}}
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}>
+      {data.map(item => {
         return (
           <Pressable
             key={item.id}
@@ -37,7 +40,8 @@ export default function Categories({data, searchForPostsByCategoryId}) {
                 : styles.categoryArea
             }
             onPress={() => toogleActiveItem(item.id)}>
-            <Text style={activeItem == item.id ? styles.textActive : styles.text}>
+            <Text
+              style={activeItem == item.id ? styles.textActive : styles.text}>
               {item.title}
             </Text>
           </Pressable>
@@ -59,7 +63,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 7,
     marginBottom: 17,
-    direction: 'rtl'
+    direction: 'rtl',
+    transform: [{scaleX: -1}],
   },
   categoryAreaActive: {
     width: 100,
@@ -72,6 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 7,
+    transform: [{scaleX: -1}],
   },
   text: {
     fontSize: 15,

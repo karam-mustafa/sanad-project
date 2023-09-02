@@ -8,9 +8,7 @@ import Header from './src/components/Header';
 export default function App() {
   return (
     <NavigationContainer>
-      {/* <View style={{backgroundColor: 'white'}}> */}
         <Tabs />
-      {/* </View> */}
     </NavigationContainer>
   );
 }

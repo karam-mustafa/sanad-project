@@ -11,8 +11,7 @@ export default function Posts({data}) {
 
   return (
     <FlatList
-      // onRefresh={onRefresh}
-      // refreshing={loading}
+      style={{flex: 1, marginBottom: 70}}
       data={data}
       renderItem={({item}) => {
         return (
