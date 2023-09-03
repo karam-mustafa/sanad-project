@@ -1,4 +1,7 @@
 {
   "name": "sanad",
-  "displayName": "sanad"
+  "displayName": "sanad",
+  "android": {
+    "package_name": "android.permission.INTERNET"
+  }
 }
