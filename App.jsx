@@ -48,7 +48,7 @@ export default function App() {
     messaging().onMessage(async remoteMessage => {
       PushNotification.localNotification({
         channelId: 'specialid',
-        message: remoteMessage.notification.title,
+        message: remoteMessage.notification.body,
         title: remoteMessage.notification.title,
       });
     });
